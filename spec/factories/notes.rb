@@ -10,7 +10,7 @@
 #
 FactoryBot.define do
   factory :note do
-    user { nil }
-    body { "MyText" }
+    user 
+    body { Faker::Lorem.paragraph }
   end
 end
