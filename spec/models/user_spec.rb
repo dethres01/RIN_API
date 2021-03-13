@@ -9,13 +9,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+require 'rails_helper'
 
-one:
-  email: MyString
-  name: MyString
-  auth_token: MyString
-
-two:
-  email: MyString
-  name: MyString
-  auth_token: MyString
+RSpec.describe User, type: :model do
+  describe "Model Validations" do
+  end
+end

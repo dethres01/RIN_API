@@ -9,13 +9,9 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-
-one:
-  email: MyString
-  name: MyString
-  auth_token: MyString
-
-two:
-  email: MyString
-  name: MyString
-  auth_token: MyString
+FactoryBot.define do
+  factory :user do
+    email {Faker::Internet.email}
+    name {Faker::Name.name}
+  end
+end
