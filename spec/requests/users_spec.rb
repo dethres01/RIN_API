@@ -5,6 +5,7 @@ RSpec.describe "/users", type: :request do
   let!(:valid_user) {create(:user,:user_t)}
   let(:valid_user1) {create(:user,:server_t)}
   let!(:valid_params){{"user"=>{"discord_id"=>"123123123456456456","user_type"=>"server"}}}
+  let!(:invalid_params){{"user"=>{"discord_id"=>"23123123456456456","user_type"=>"server"}}}
   # here we create a let!, meaning, it creates when it's defined
   let(:invalid_user) {create :user,user_type: "nobueno"}
   # here we create with let, mening, it only creates when we call it
@@ -45,6 +46,11 @@ RSpec.describe "/users", type: :request do
   end
 
   describe "POST /users" do
+    #this is the way I'm going to register users
+    #discord_ids are uniq, so if a user with the same id tries to register
+    #again it should return an exception
+    #Also, we could test to register an invalid user, that should return another exception
+    #I don't know if they're the same exception but les go
     it "creates an user" do
       post "/users/",params: valid_params
       payload = JSON.parse(response.body)
@@ -52,10 +58,25 @@ RSpec.describe "/users", type: :request do
       expect(payload).to include("discord_id","user_type")
       expect(response).to have_http_status(:created)
     end
-    #this is the way I'm going to register users
-    #discord_ids are uniq, so if a user with the same id tries to register
-    #again it should return an exception
-    #Also, we could test to register an invalid user, that should return another exception
-    #I don't know if they're the same exception but les go
+    it "raises an exception if we try to create an existing user" do
+      post "/users/",params: valid_params
+      payload = JSON.parse(response.body)
+      expect(payload).to include("discord_id","user_type")
+      expect(response).to have_http_status(:created)
+      post "/users/",params: valid_params
+      payload = JSON.parse(response.body)
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+    it "raises an exception if user is invalid" do
+      post "/users/",params: invalid_params
+      payload = JSON.parse(response.body)
+      expect(payload).to_not be_empty
+      expect(payload).to include("error") 
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
+  describe "PUT /users/{:id}" do
+    #atm there's no need to update an user once it's created since it cannot change 
+    #from user to server or change his userid
+  end 
 end
