@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: notes
@@ -11,23 +13,23 @@
 require 'rails_helper'
 
 RSpec.describe Note, type: :model do
-  describe "Model Validation" do
-    it "should have the proper columns" do
-      should have_db_column("id")
-      should have_db_column("title")
-      should have_db_column("user_id")
-      should have_db_column("body")
-      should have_db_column("created_at")
-      should have_db_column("updated_at")
+  describe 'Model Validation' do
+    it 'should have the proper columns' do
+      should have_db_column('id')
+      should have_db_column('title')
+      should have_db_column('user_id')
+      should have_db_column('body')
+      should have_db_column('created_at')
+      should have_db_column('updated_at')
     end
-    it "should belong to a user" do
-      should belong_to("user")
+    it 'should belong to a user' do
+      should belong_to('user')
     end
 
-    it "should have the proper validations" do
-      should validate_presence_of("body")
-      should validate_length_of("body")
-      should validate_presence_of("title")
+    it 'should have the proper validations' do
+      should validate_presence_of('body')
+      should validate_length_of('body')
+      should validate_presence_of('title')
     end
   end
 end

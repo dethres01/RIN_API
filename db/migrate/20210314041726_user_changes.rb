@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserChanges < ActiveRecord::Migration[6.1]
   def change
     rename_column :users, :auth_token, :discord_id

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: notes
@@ -11,6 +13,6 @@
 class Note < ApplicationRecord
   belongs_to :user
 
-  validates :body, presence: true, length: {minimum: 15}
+  validates :body, presence: true, length: { minimum: 15 }
   validates :title, presence: true
 end

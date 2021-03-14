@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -10,12 +12,12 @@
 #
 FactoryBot.define do
   factory :user do
-    discord_id {18.times.map { rand(10) }.join.to_s}
+    discord_id { 18.times.map { rand(10) }.join.to_s }
     trait :user_t do
-      user_type {"user"}
+      user_type { 'user' }
     end
     trait :server_t do
-      user_type {"server"}
+      user_type { 'server' }
     end
   end
 end

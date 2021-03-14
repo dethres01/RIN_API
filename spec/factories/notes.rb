@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: notes
@@ -10,8 +12,8 @@
 #
 FactoryBot.define do
   factory :note do
-    title {Faker::Lorem.sentence}
+    title { Faker::Lorem.sentence }
     body { Faker::Lorem.paragraph }
-    association :user, factory: :user 
+    association :user, factory: :user
   end
 end

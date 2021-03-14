@@ -1,12 +1,12 @@
+# frozen_string_literal: true
+
 class NotesController < ApplicationController
-  before_action :set_note, only: [:show, :update, :destroy]
+  before_action :set_note, only: %i[show update destroy]
 
   # GET /notes
   def index
     @notes = Note.all
-    if !params[:search].nil? && params[:search].present?
-      @notes = NotesSearchService.search(@notes, params[:search])
-    end
+    @notes = NotesSearchService.search(@notes, params[:search]) if !params[:search].nil? && params[:search].present?
     render json: @notes
   end
 
@@ -41,13 +41,14 @@ class NotesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_note
-      @note = Note.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def note_params
-      params.require(:note).permit(:user_id, :body)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_note
+    @note = Note.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def note_params
+    params.require(:note).permit(:user_id, :body)
+  end
 end
