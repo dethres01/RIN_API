@@ -3,11 +3,10 @@
 # Table name: users
 #
 #  id         :bigint           not null, primary key
-#  email      :string
-#  name       :string
-#  auth_token :string
+#  discord_id :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_type  :string
 #
 require 'rails_helper'
 
@@ -15,9 +14,8 @@ RSpec.describe User, type: :model do
   describe "Model Validations" do
     it "should have the proper structure" do
       should have_db_column("id")
-      should have_db_column("email")
-      should have_db_column("name")
-      should have_db_column("auth_token")
+      should have_db_column("discord_id")
+      should have_db_column("user_type")
       should have_db_column("created_at")
       should have_db_column("updated_at")
     end
@@ -25,8 +23,8 @@ RSpec.describe User, type: :model do
       should have_many("notes")
     end
     it "should have the proper validations" do
-      should validate_presence_of("email")
-      should validate_presence_of("name")
+      should validate_presence_of("discord_id")
+      should validate_presence_of("user_type")
     end
   end
 end

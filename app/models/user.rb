@@ -3,15 +3,14 @@
 # Table name: users
 #
 #  id         :bigint           not null, primary key
-#  email      :string
-#  name       :string
-#  auth_token :string
+#  discord_id :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_type  :string
 #
 class User < ApplicationRecord
     has_many :notes
 
-    validates :email, presence: true
-    validates :name, presence: true
+    validates :discord_id, presence: true
+    validates :user_type, presence: true
 end
