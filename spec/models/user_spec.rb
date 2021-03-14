@@ -25,6 +25,7 @@ RSpec.describe User, type: :model do
     it "should have the proper validations" do
       should validate_presence_of("discord_id")
       should validate_presence_of("user_type")
+      should validate_length_of("discord_id")
     end
   end
 end

@@ -4,7 +4,9 @@ class NotesController < ApplicationController
   # GET /notes
   def index
     @notes = Note.all
-
+    if !params[:search].nil? && params[:search].present?
+      @notes = NotesSearchService.search(@notes, params[:search])
+    end
     render json: @notes
   end
 

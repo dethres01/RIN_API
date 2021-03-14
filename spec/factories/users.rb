@@ -10,7 +10,12 @@
 #
 FactoryBot.define do
   factory :user do
-    email {Faker::Internet.email}
-    name {Faker::Name.name}
+    discord_id {18.times.map { rand(10) }.join.to_s}
+    trait :user_t do
+      user_type {"user"}
+    end
+    trait :server_t do
+      user_type {"server"}
+    end
   end
 end

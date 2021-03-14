@@ -13,115 +13,19 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/notes", type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # Note. As you add validations to Note, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
-
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
-
-  # This should return the minimal set of values that should be in the headers
-  # in order to pass any filters (e.g. authentication) defined in
-  # NotesController, or in your router and rack
-  # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
-    {}
-  }
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      Note.create! valid_attributes
-      get notes_url, headers: valid_headers, as: :json
-      expect(response).to be_successful
+  let!(:valid_user) {create(:user,:user_t)}
+  describe "search" do
+    let!(:hola_mundo) {create(:note,title: "Hola Mundo",user_id: valid_user.id)}
+    let!(:hola_rails) {create(:note,title: "Hola Rails",user_id: valid_user.id)}
+    let!(:curso_rails) {create(:note,title: "Curso Rails",user_id: valid_user.id)}
+    it "should filter posts by title" do
+      get "/notes?search=Hola"
+      payload = JSON.parse(response.body)
+      expect(payload).to_not be_empty
+      expect(payload.size).to eq(2)
+      expect(payload.map { |p| p["id"]}.sort).to eq([hola_mundo.id,hola_rails.id])
+      expect(response).to have_http_status(200)
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      note = Note.create! valid_attributes
-      get note_url(note), as: :json
-      expect(response).to be_successful
-    end
-  end
-
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Note" do
-        expect {
-          post notes_url,
-               params: { note: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Note, :count).by(1)
-      end
-
-      it "renders a JSON response with the new note" do
-        post notes_url,
-             params: { note: valid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "does not create a new Note" do
-        expect {
-          post notes_url,
-               params: { note: invalid_attributes }, as: :json
-        }.to change(Note, :count).by(0)
-      end
-
-      it "renders a JSON response with errors for the new note" do
-        post notes_url,
-             params: { note: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested note" do
-        note = Note.create! valid_attributes
-        patch note_url(note),
-              params: { note: new_attributes }, headers: valid_headers, as: :json
-        note.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the note" do
-        note = Note.create! valid_attributes
-        patch note_url(note),
-              params: { note: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the note" do
-        note = Note.create! valid_attributes
-        patch note_url(note),
-              params: { note: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested note" do
-      note = Note.create! valid_attributes
-      expect {
-        delete note_url(note), headers: valid_headers, as: :json
-      }.to change(Note, :count).by(-1)
-    end
-  end
 end
