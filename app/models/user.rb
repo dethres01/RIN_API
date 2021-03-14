@@ -11,6 +11,6 @@
 class User < ApplicationRecord
     has_many :notes
 
-    validates :discord_id, presence: true, length: {is: 18}
+    validates :discord_id, presence: true, length: {is: 18}, uniqueness: {case_sensitive: false}
     validates :user_type, presence: true,inclusion: {in: %w(user server)}
 end

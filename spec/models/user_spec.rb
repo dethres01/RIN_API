@@ -26,6 +26,9 @@ RSpec.describe User, type: :model do
       should validate_presence_of("discord_id")
       should validate_presence_of("user_type")
       should validate_length_of("discord_id")
+      #Since discord_id is only numbers,we have to specify that our
+      #validation doesn't care about alphacharacters
+      should validate_uniqueness_of("discord_id").case_insensitive
     end
   end
 end
