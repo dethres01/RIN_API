@@ -16,6 +16,15 @@ require 'rails_helper'
 
 RSpec.describe '/notes', type: :request do
   let!(:valid_user) { create(:user, :user_t) }
+  describe "GET /notes" do
+    #Ideal implementation would be to search
+    #according to an ID and its type
+    #but it basically reduces to  ID because type
+    #only serves to be a basic identifier and 
+    #extra validation
+    #Still, it seems like the solution would be to
+    #use the NoteSearchService but the other way aroundSSS
+  end
   describe 'search' do
     let!(:hola_mundo) { create(:note, title: 'Hola Mundo', user_id: valid_user.id) }
     let!(:hola_rails) { create(:note, title: 'Hola Rails', user_id: valid_user.id) }
