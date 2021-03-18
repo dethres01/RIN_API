@@ -11,7 +11,7 @@ class NotesSearchService
 
   def self.search_by_user(curr_notes,query) #locate
     notes_ids = Rails.cache.fetch("notes_search/#{query}", expires_in: 1.hours) do
-        curr_notes.where(user_id: query).map(&:id)
+        curr_notes.where(discord_id: query).map(&:id)
     end
     curr_notes.where(id: notes_ids)
   end
