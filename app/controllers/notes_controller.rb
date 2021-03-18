@@ -30,10 +30,15 @@ class NotesController < ApplicationController
 
   # PATCH/PUT /notes/1
   def update
-    if @note.update(note_params)
-      render json: @note
+   
+    if @note.discord_id == note_params['discord_id']
+      if @note.update(note_params) && @note.discord_id == note_params['discord_id']
+        render json: @note
+      else
+        render json: @note.errors, status: :unprocessable_entity
+      end
     else
-      render json: @note.errors, status: :unprocessable_entity
+      render json: {error: "Unauthorized"}, status: :unauthorized
     end
   end
 

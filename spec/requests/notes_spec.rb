@@ -90,19 +90,25 @@ RSpec.describe '/notes', type: :request do
 
   describe "PUT /notes/{:id}" do
     let!(:valid_note1) {create(:note)}
-    context "when updating a note" do
+    context "when updating another users note" do
       before {put "/notes/#{valid_note1.id}",params: valid_params}
       context "payload" do
         subject {payload}
-        it { is_expected.to include(:id,:title,:body,:discord_id,:server_id)}
-        it { expect(payload[:id]).to eq(valid_note1.id)}
+        it { is_expected.to include(:error)}
+        #it { expect(payload[:id]).to eq(valid_note1.id)}
       end
       context "response" do
         subject {response}
-        it {is_expected.to have_http_status(:ok)}  
+        it {is_expected.to have_http_status(:unauthorized)}  
       end
       #updating other person's note
       #Also I have to think about permission
+    end
+    context "when updating own post" do
+      context "with valid params" do
+      end
+      context "without valid params" do
+      end
     end
   end
   private
