@@ -53,7 +53,7 @@ RSpec.describe '/notes', type: :request do
       payload = JSON.parse(response.body)
       expect(payload).to_not be_empty
       expect(payload.size).to eq(2)
-      expect(payload.map { |p| p['id'] }.sort).to eq([hola_mundo.id, hola_rails.id])
+      expect(payload.map { |p| p['server_id'] }.sort).to eq([hola_mundo.server_id, hola_rails.server_id])
       expect(response).to have_http_status(200)
     end
   end

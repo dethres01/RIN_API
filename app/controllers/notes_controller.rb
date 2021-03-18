@@ -11,7 +11,10 @@ class NotesController < ApplicationController
       @notes = NotesSearchService.search_by_user(@notes,
                                                  params[:locate])
     end
-    @notes = NotesSearchService.search_by_server(@notes, params[:find]) if !params[:find].nil? && params[:find].present?
+    if !params[:find].nil? && params[:find].present?
+      @notes = NotesSearchService.search_by_server(@notes, params[:find])
+    end
+    
     render json: @notes, status: :ok
   end
 
