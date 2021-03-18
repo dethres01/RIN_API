@@ -60,8 +60,8 @@ RSpec.describe '/notes', type: :request do
 
   describe 'GET /notes/{:id}' do
     let!(:valid_note) { create(:note) }
-    it 'Should return the proper note' do
-      get "/notes/#{valid_note.id}"
+    it 'Should return the proper note with valid server_id' do
+      get "/notes/#{valid_note.id}?auth=#{valid_note.server_id}"
       payload = JSON.parse(response.body)
       expect(payload).to_not be_empty
       expect(payload['id']).to eq(valid_note.id)
@@ -70,6 +70,18 @@ RSpec.describe '/notes', type: :request do
       expect(payload['discord_id']).to eq(valid_note.discord_id)
       expect(payload['server_id']).to eq(valid_note.server_id)
       expect(response).to have_http_status(200)
+    end
+    it 'Should return an error of missing auth' do
+      get "/notes/#{valid_note.id}"
+      expect(payload).to include("error")
+      expect(payload['error']).to eq('Auth missing')
+      expect(response).to have_http_status(:unauthorized)
+    end
+    it 'Should return an error of wrong auth' do
+      get "/notes/#{valid_note.id}?auth=123"
+      expect(payload).to include("error")
+      expect(payload['error']).to eq('Invalid Server query')
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 

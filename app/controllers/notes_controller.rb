@@ -20,7 +20,17 @@ class NotesController < ApplicationController
 
   # GET /notes/1
   def show
-    render json: @note
+    if !params[:auth].nil? && params[:auth].present?
+      @validation = NoteShowService.auth(@note,params[:auth])
+      if @validation
+        render json: @note
+      else
+        render json: {error: 'Invalid Server query'}, status: :unauthorized
+      end
+    else
+      render json: {error: 'Auth missing'}, status: :unauthorized
+    end
+    
   end
 
   # POST /notes
