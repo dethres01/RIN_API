@@ -18,4 +18,14 @@ class NotesSearchService
     end
     curr_notes.where(id: notes_ids)
   end
+  def self.search_by_server(curr_notes,query)
+    server = User.find_by server_id: "#{query}"
+    if author
+      notes_ids = Rails.cache.fetch("notes_search/#{query}", expires_in: 1.hours) do
+        curr_notes.where(user_id: server.id).map(&:id)
+      end
+    end
+    curr_notes.where(id: notes_ids)
+  end
+  end
 end
