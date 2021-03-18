@@ -15,7 +15,7 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/notes', type: :request do
-  let!(:valid_user) { create(:user, :user_t) }
+  let!(:valid_user) { create(:user) }
   describe "GET /notes" do
     #Ideal implementation would be to search
     #according to an ID and its type

@@ -15,7 +15,7 @@ class NoteSerializer < ActiveModel::Serializer
     user =self.object.user
     {
       discord_id: user.discord_id,
-      user_type: user.user_type,
+      server_id: user.server_id,
       id: user.id 
     }
   end

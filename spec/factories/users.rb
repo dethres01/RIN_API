@@ -13,11 +13,6 @@
 FactoryBot.define do
   factory :user do
     discord_id { 18.times.map { rand(10) }.join.to_s }
-    trait :user_t do
-      user_type { 'user' }
-    end
-    trait :server_t do
-      user_type { 'server' }
-    end
+    server_id { 18.times.map { rand(10) }.join.to_s }
   end
 end
