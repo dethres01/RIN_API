@@ -9,6 +9,7 @@
 #  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  title      :string
 #
 FactoryBot.define do
   factory :note do

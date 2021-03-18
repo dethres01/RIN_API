@@ -8,7 +8,7 @@
 #  discord_id :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_type  :string
+#  server_id  :string
 #
 class User < ApplicationRecord
   has_many :notes
