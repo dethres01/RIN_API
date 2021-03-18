@@ -15,7 +15,6 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe '/notes', type: :request do
-  let!(:valid_user) { create(:user) }
   describe "GET /notes" do
     #Ideal implementation would be to search
     #according to an ID and its type
@@ -26,9 +25,9 @@ RSpec.describe '/notes', type: :request do
     #use the NoteSearchService but the other way aroundSSS
   end
   describe 'search' do
-    let!(:hola_mundo) { create(:note, title: 'Hola Mundo', user_id: valid_user.id) }
-    let!(:hola_rails) { create(:note, title: 'Hola Rails', user_id: valid_user.id) }
-    let!(:curso_rails) { create(:note, title: 'Curso Rails', user_id: valid_user.id) }
+    let!(:hola_mundo) { create(:note, title: 'Hola Mundo') }
+    let!(:hola_rails) { create(:note, title: 'Hola Rails') }
+    let!(:curso_rails) { create(:note, title: 'Curso Rails') }
     it 'should filter posts by title' do
       get '/notes?search=Hola'
       payload = JSON.parse(response.body)

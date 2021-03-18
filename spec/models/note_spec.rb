@@ -25,14 +25,13 @@ RSpec.describe Note, type: :model do
       should have_db_column('created_at')
       should have_db_column('updated_at')
     end
-    it 'should belong to a user' do
-      should belong_to('user')
-    end
-
     it 'should have the proper validations' do
       should validate_presence_of('body')
-      should validate_length_of('body')
       should validate_presence_of('title')
+      should validate_presence_of('discord_id')
+      should validate_length_of('body')
+      should validate_length_of('discord_id')
+      should validate_length_of('server_id')
     end
   end
 end

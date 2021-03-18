@@ -13,8 +13,6 @@
 #  server_id  :string
 #
 class Note < ApplicationRecord
-  belongs_to :user
-
   validates :body, presence: true, length: { minimum: 15 }
   validates :title, presence: true
   validates :discord_id, presence: true, length: {is: 18}
