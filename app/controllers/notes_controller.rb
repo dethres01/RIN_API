@@ -7,8 +7,11 @@ class NotesController < ApplicationController
   def index
     @notes = Note.all
     @notes = NotesSearchService.search(@notes, params[:search]) if !params[:search].nil? && params[:search].present?
-    @notes = NotesSearchService.search_by_user(@notes,params[:locate]) if !params[:locate].nil? && params[:locate].present?
-    @notes = NotesSearchService.search_by_server(@notes,params[:find]) if !params[:find].nil? && params[:find].present?
+    if !params[:locate].nil? && params[:locate].present?
+      @notes = NotesSearchService.search_by_user(@notes,
+                                                 params[:locate])
+    end
+    @notes = NotesSearchService.search_by_server(@notes, params[:find]) if !params[:find].nil? && params[:find].present?
     render json: @notes, status: :ok
   end
 
@@ -30,7 +33,6 @@ class NotesController < ApplicationController
 
   # PATCH/PUT /notes/1
   def update
-   
     if @note.discord_id == note_params['discord_id']
       if @note.update(note_params)
         render json: @note
@@ -38,21 +40,19 @@ class NotesController < ApplicationController
         render json: @note.errors, status: :unprocessable_entity
       end
     else
-      render json: {error: "Unauthorized"}, status: :unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 
   # DELETE /notes/1
   def destroy
-    @validation =NoteDeleteService.auth(@note,params[:auth]) if !params[:auth].nil? && params[:auth].present? 
+    @validation = NoteDeleteService.auth(@note, params[:auth]) if !params[:auth].nil? && params[:auth].present?
     if @validation
       @note.destroy
-      render json: {api: "Succesfully deleted"}, status: 201
+      render json: { api: 'Succesfully deleted' }, status: 201
     else
-      render json: {error: "Unauthorized"}, status: :unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
-    
-    
   end
 
   private
@@ -64,6 +64,6 @@ class NotesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def note_params
-    params.require(:note).permit(:title, :body,:discord_id,:server_id)
+    params.require(:note).permit(:title, :body, :discord_id, :server_id)
   end
 end

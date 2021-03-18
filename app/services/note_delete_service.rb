@@ -1,9 +1,7 @@
+# frozen_string_literal: true
+
 class NoteDeleteService
-  def self.auth(curr_note,query)
-    if curr_note.discord_id == query
-      return true
-    else
-      return false
-    end
+  def self.auth(curr_note, query)
+    curr_note.discord_id == query
   end
 end

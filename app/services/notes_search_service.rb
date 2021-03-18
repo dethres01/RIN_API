@@ -9,15 +9,18 @@ class NotesSearchService
     curr_notes.where(id: notes_ids)
   end
 
-  def self.search_by_user(curr_notes,query) #locate
+  # locate
+  def self.search_by_user(curr_notes, query)
     notes_ids = Rails.cache.fetch("notes_search/#{query}", expires_in: 1.hours) do
-        curr_notes.where(discord_id: query).map(&:id)
+      curr_notes.where(discord_id: query).map(&:id)
     end
     curr_notes.where(id: notes_ids)
   end
-  def self.search_by_server(curr_notes,query) #find
+
+  # find
+  def self.search_by_server(curr_notes, query)
     notes_ids = Rails.cache.fetch("notes_search/#{query}", expires_in: 1.hours) do
-        curr_notes.where(server_id: query).map(&:id)
+      curr_notes.where(server_id: query).map(&:id)
     end
     curr_notes.where(id: notes_ids)
   end

@@ -16,7 +16,7 @@ FactoryBot.define do
   factory :note do
     title { Faker::Lorem.sentence }
     body { Faker::Lorem.paragraph }
-    discord_id {18.times.map{rand(10)}.join}
-    server_id {18.times.map{rand(10)}.join}
+    discord_id { 18.times.map { rand(10) }.join }
+    server_id { 18.times.map { rand(10) }.join }
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: notes
@@ -11,5 +13,5 @@
 #  server_id  :string
 #
 class NoteSerializer < ActiveModel::Serializer
-  attributes :id, :title, :body, :server_id,:discord_id
+  attributes :id, :title, :body, :server_id, :discord_id
 end
