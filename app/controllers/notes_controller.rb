@@ -32,7 +32,7 @@ class NotesController < ApplicationController
   def update
    
     if @note.discord_id == note_params['discord_id']
-      if @note.update(note_params) && @note.discord_id == note_params['discord_id']
+      if @note.update(note_params)
         render json: @note
       else
         render json: @note.errors, status: :unprocessable_entity
@@ -44,7 +44,15 @@ class NotesController < ApplicationController
 
   # DELETE /notes/1
   def destroy
-    @note.destroy
+    @validation =NoteDeleteService.auth(@note,params[:auth]) if !params[:auth].nil? && params[:auth].present? 
+    if @validation
+      @note.destroy
+      render json: {api: "Succesfully deleted"}, status: 201
+    else
+      render json: {error: "Unauthorized"}, status: :unauthorized
+    end
+    
+    
   end
 
   private

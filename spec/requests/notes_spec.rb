@@ -104,11 +104,18 @@ RSpec.describe '/notes', type: :request do
       #updating other person's note
       #Also I have to think about permission
     end
-    context "when updating own post" do
-      context "with valid params" do
-      end
-      context "without valid params" do
-      end
+  end
+  describe "DELETE /notes/{:id}" do
+    let!(:delete_note) {create(:note)}
+    it "with valid auth" do
+      delete "/notes/#{delete_note.id}?auth=#{delete_note.discord_id}"
+      payload = JSON.parse(response.body)
+      expect(response).to have_http_status(201)
+    end
+    it "without valid auth" do
+      delete "/notes/#{delete_note.id}"
+      payload = JSON.parse(response.body)
+      expect(response).to have_http_status(:unauthorized)
     end
   end
   private
