@@ -5,16 +5,18 @@
 # Table name: notes
 #
 #  id         :bigint           not null, primary key
-#  user_id    :bigint           not null
 #  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  title      :string
+#  discord_id :string
+#  server_id  :string
 #
 FactoryBot.define do
   factory :note do
     title { Faker::Lorem.sentence }
     body { Faker::Lorem.paragraph }
-    association :user, factory: :user
+    discord_id {10.times.map{rand(10)}.join}
+    server_id {10.times.map{rand(10)}.join}
   end
 end

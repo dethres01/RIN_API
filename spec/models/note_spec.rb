@@ -5,11 +5,12 @@
 # Table name: notes
 #
 #  id         :bigint           not null, primary key
-#  user_id    :bigint           not null
 #  body       :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  title      :string
+#  discord_id :string
+#  server_id  :string
 #
 require 'rails_helper'
 
@@ -18,7 +19,8 @@ RSpec.describe Note, type: :model do
     it 'should have the proper columns' do
       should have_db_column('id')
       should have_db_column('title')
-      should have_db_column('user_id')
+      should have_db_column('discord_id')
+      should have_db_column('server_id')
       should have_db_column('body')
       should have_db_column('created_at')
       should have_db_column('updated_at')
