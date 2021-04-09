@@ -30,7 +30,7 @@ development:
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user running Rails.
   username: hirane
-  password: diedes12primo
+  password: dummy123
   host: localhost
   # The password associated with the postgres role (username).
 
@@ -59,7 +59,7 @@ test:
   <<: *default
   database: RIN_API_test
   username: hirane
-  password: diedes12primo
+  password: dummy123
   host: localhost
 
 # As with config/credentials.yml, you never want to store sensitive information,

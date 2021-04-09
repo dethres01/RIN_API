@@ -22,7 +22,11 @@ class NotesController < ApplicationController
   def show
     if !params[:auth].nil? && params[:auth].present?
       @validation = NoteShowService.auth(@note,params[:auth])
-      if @validation
+      #falsy o trulsy
+      #0 falsy
+      #1 true
+      #[].empty? -> [] falsy
+      if @validation #<-
         render json: @note
       else
         render json: {error: 'Invalid Server query'}, status: :unauthorized
